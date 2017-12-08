@@ -1,0 +1,94 @@
+/*@-webkit-keyframes typing { from { width: 0; } }
+@-webkit-keyframes blink-caret { 50% { border-color: transparent; } }    */
+
+
+.custom-overlay
+{
+  background-color: black;
+  background-image: none;
+  opacity: 0.9;
+  z-index: 1040;
+  width: 100%;
+}
+
+.text:before{
+
+  width: 100%;
+}
+
+.text{
+
+  background-color: black;
+  background-image: none;
+  opacity: 0.9;
+  z-index: 1040;
+  min-height: 100vh;
+  display: inline-block;
+  line-height: 100vh;
+
+}
+
+.image{
+
+  background-image: url('johnny.jpg');
+  opacity: 0.9;
+  z-index: 1040;
+  min-height: 100vh;
+  display: inline-block;
+  line-height: 100vh;
+
+}
+
+.text-content{
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+  color: white;
+  font-size: 40px;
+
+}
+
+.text noscript {
+  text-align: center;
+  display: inline-block;
+
+
+
+
+  /*font: bold 300% Consolas, Monaco, monospace;
+  border-right: .1em solid black;
+  width: 16.5em;
+  width: 21ch;
+  margin: 2em 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  -webkit-animation: typing 2s steps(1400, end),
+  blink-caret .5s step-end infinite alternate;*/
+
+}
+
+
+.cursor:after {
+    content:"_";
+    opacity: 0;
+    animation: cursor 1s infinite;
+}
+
+@keyframes cursor {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

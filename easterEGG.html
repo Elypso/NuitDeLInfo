@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="easterEGG.css"/>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <!--<script src="typewriter.js"></script>-->
+
+
+  <title>Title</title>
+</head>
+<body>
+
+<audio id="audioPlayer" src="musique.mp3"></audio>
+
+
+<div class="text" hidden>
+
+  <div id="message" class="text-content">
+    <noscript>Bonjour, vous voici maintenant dans notre easter egg. Pour pouvoir trouver le easter egg final, essayez de
+      trouver le groupe de mot en rapport avec cette nuit de l'info. Vous avez 3 tentatives. Bonne Chance :) :)
+    </noscript>
+  </div>
+
+  <div id="erreur1" class="text-content">
+    <noscript>
+      Vous avez donné la mauvaise réponse. Allez plus que 2 chances.
+      Indice : Le groupe de mot est présent dans le message de début et concerne la NUIT DE L'INFO, si vous trouvez pas
+      la je ne peux rien pour vous.
+
+    </noscript>
+  </div>
+
+  <div id="erreur2" class="text-content">
+    <noscript>
+      Dites "nuit de l'info" est amusez vous bien :)
+    </noscript>
+  </div>
+
+  <div id="erreur3" class="text-content">
+    <noscript>
+      Alors si vous êtes arriver à la vous êtes un cas perdu.
+    </noscript>
+  </div>
+
+
+  <div id="test" class="text-content">
+    <noscript>GROOPTOWN on vous demande de nous offrir les 3 drones pour ce magnifique easter egg
+    </noscript>
+  </div>
+
+</div>
+
+<script>
+    $(function () {
+
+        $('.test').hide();
+        var t = 0;
+
+        var player = document.querySelector('#audioPlayer');
+        player.pause();
+
+
+        //Haut, haut, bas, bas, gauche, droite, gauche, droite, B, A
+        var k = [38, 38],
+            n = 0;
+        $(document).keydown(function (e) {
+
+            if (e.keyCode === k[n++]) {
+                if (n === k.length) {
+
+                    $('body').addClass('custom-overlay');
+                    $('.text').show();
+                    typeWrite('message');
+
+                    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+                    recognition = new SpeechRecognition();
+                    recognition.continuous = true;
+                    recognition.lang = "fr-FR";
+                    recognition.onresult = function (event) {
+
+                        for (i = event.resultIndex; i < event.results.length; i++, t++) {
+
+                            if (event.results[i][0].transcript.trim() === "nuit de l'info") {
+
+                                $('#message').hide();
+                                $('#erreur1').hide();
+                                $('#erreur2').hide();
+                                $('#erreur3').hide();
+                                //event.results[i][0].transcript.replace(/ /g,"");
+                                console.log(event.results[i][0].transcript.trim() + '1');
+                                typeWrite('test');
+                                player.play();
+                                $('body').addClass('image');
+                            }
+
+                            if (t === 0) {
+
+                                if (event.results[i][0].transcript.trim() !== "nuit de l'info") {
+
+                                    $('#message').hide();
+                                    console.log(event.results[i][0].transcript.trim()+ '2');
+                                    typeWrite('erreur1');
+
+                                }
+
+                            }
+
+
+                            if (t === 1) {
+                                if (event.results[i][0].transcript.trim() !== "nuit de l'info") {
+
+                                    $('#erreur1').hide();
+                                    console.log(event.results[i][0].transcript.trim()+ '3');
+                                    typeWrite('erreur2');
+                                }
+                            }
+
+                            if (t === 2) {
+
+                                if (event.results[i][0].transcript.trim() !== "nuit de l'info") {
+
+                                    $('#erreur2').hide();
+                                    console.log(event.results[i][0].transcript.trim()+ '4');
+                                    typeWrite('erreur3');
+                                    return false;
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+
+                recognition.start();
+                n = 0;
+                return false;
+            }
+            else {
+                n = 0;
+            }
+        });
+
+        function randomIntFromInterval(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        function typeWrite(span) {
+            $('#' + span).addClass('cursor')
+            var text = $('#' + span).text();
+            var randInt = 0
+            for (var i = 0; i < text.length; i++) {
+                randInt += parseInt(randomIntFromInterval(10, 40));
+                var typing = setTimeout(function (y) {
+                    $('#' + span).append(text.charAt(y));
+                }, randInt, i);
+            }
+            ;
+            setTimeout(function () {
+                $('#' + span).removeClass('cursor');
+            }, randInt + 2500);
+        }
+
+
+    });
+
+
+</script>
+
+
+</body>
+</html>
+
+
+
